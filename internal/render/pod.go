@@ -108,6 +108,8 @@ func (p Pod) Header(ns string) model1.Header {
 		model1.HeaderColumn{Name: "LABELS", Wide: true},
 		model1.HeaderColumn{Name: "VALID", Wide: true},
 		model1.HeaderColumn{Name: "AGE", Time: true},
+		model1.HeaderColumn{Name: "ROLE"},
+		model1.HeaderColumn{Name: "CMPD"},
 	}
 }
 
@@ -121,6 +123,12 @@ func (p Pod) Render(o interface{}, ns string, row *model1.Row) error {
 	var po v1.Pod
 	if err := runtime.DefaultUnstructuredConverter.FromUnstructured(pwm.Raw.Object, &po); err != nil {
 		return err
+	}
+	role := ""
+	cmpd := ""
+	if len(po.Labels) > 0 {
+		role = po.Labels["kubeblocks.io/role"]
+		cmpd = po.Labels["app.kubernetes.io/component"]
 	}
 
 	ics := po.Status.InitContainerStatuses
@@ -160,6 +168,8 @@ func (p Pod) Render(o interface{}, ns string, row *model1.Row) error {
 		mapToStr(po.Labels),
 		AsStatus(p.diagnose(phase, cr, len(cs))),
 		ToAge(po.GetCreationTimestamp()),
+		role,
+		cmpd,
 	}
 
 	return nil

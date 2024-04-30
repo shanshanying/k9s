@@ -105,6 +105,12 @@ func appsViewers(vv MetaViewers) {
 	vv[client.DsGVR] = MetaViewer{
 		viewerFn: NewDaemonSet,
 	}
+	vv[client.NewGVR("apps.kubeblocks.io/v1/components")] = MetaViewer{
+		viewerFn: NewComponent,
+	}
+	vv[client.NewGVR("apps.kubeblocks.io/v1/clusters")] = MetaViewer{
+		viewerFn: NewCluster,
+	}
 }
 
 func rbacViewers(vv MetaViewers) {

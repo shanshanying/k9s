@@ -7,6 +7,7 @@ require (
 	github.com/anchore/clio v0.0.0-20250319180342-2cfe4b0cb716
 	github.com/anchore/grype v0.91.0
 	github.com/anchore/syft v1.22.0
+	github.com/apecloud/kubeblocks v1.0.0-beta.44
 	github.com/atotto/clipboard v0.1.4
 	github.com/cenkalti/backoff/v4 v4.3.0
 	github.com/derailed/tcell/v2 v2.3.1-rc.4
@@ -22,21 +23,22 @@ require (
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/petergtz/pegomock v2.9.0+incompatible
 	github.com/rakyll/hey v0.1.4
+	github.com/rs/zerolog v1.22.0
 	github.com/sahilm/fuzzy v0.1.1
 	github.com/spf13/cobra v1.9.1
 	github.com/stretchr/testify v1.10.0
 	github.com/xeipuuv/gojsonschema v1.2.0
-	golang.org/x/text v0.24.0
+	golang.org/x/text v0.23.0
 	gopkg.in/yaml.v3 v3.0.1
-	helm.sh/helm/v3 v3.17.3
-	k8s.io/api v0.32.3
-	k8s.io/apiextensions-apiserver v0.32.3
-	k8s.io/apimachinery v0.32.3
-	k8s.io/cli-runtime v0.32.3
-	k8s.io/client-go v0.32.3
+	helm.sh/helm/v3 v3.14.2
+	k8s.io/api v0.29.14
+	k8s.io/apiextensions-apiserver v0.29.14
+	k8s.io/apimachinery v0.29.14
+	k8s.io/cli-runtime v0.29.14
+	k8s.io/client-go v0.29.14
 	k8s.io/klog/v2 v2.130.1
-	k8s.io/kubectl v0.32.3
-	k8s.io/metrics v0.32.3
+	k8s.io/kubectl v0.29.0
+	k8s.io/metrics v0.29.0
 	sigs.k8s.io/yaml v1.4.0
 )
 
@@ -89,7 +91,7 @@ require (
 	github.com/aquasecurity/go-version v0.0.1 // indirect
 	github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de // indirect
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
-	github.com/aws/aws-sdk-go v1.44.288 // indirect
+	github.com/aws/aws-sdk-go v1.50.8 // indirect
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
 	github.com/becheran/wildmatch-go v1.0.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
@@ -143,12 +145,12 @@ require (
 	github.com/envoyproxy/go-control-plane v0.13.1 // indirect
 	github.com/envoyproxy/protoc-gen-validate v1.1.0 // indirect
 	github.com/evanphx/json-patch v5.9.0+incompatible // indirect
+	github.com/evanphx/json-patch/v5 v5.8.0 // indirect
 	github.com/exponent-io/jsonpath v0.0.0-20210407135951-1de76d718b3f // indirect
 	github.com/facebookincubator/nvdtools v0.1.5 // indirect
 	github.com/fatih/camelcase v1.0.0 // indirect
 	github.com/felixge/fgprof v0.9.5 // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
-	github.com/fxamacker/cbor/v2 v2.7.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.8 // indirect
 	github.com/gdamore/encoding v1.0.1 // indirect
 	github.com/github/go-spdx/v2 v2.3.2 // indirect
@@ -164,7 +166,6 @@ require (
 	github.com/go-openapi/jsonreference v0.20.2 // indirect
 	github.com/go-openapi/swag v0.23.0 // indirect
 	github.com/go-restruct/restruct v1.2.0-alpha // indirect
-	github.com/go-test/deep v1.1.1 // indirect
 	github.com/go-viper/mapstructure/v2 v2.2.1 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
@@ -172,7 +173,7 @@ require (
 	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
-	github.com/google/btree v1.0.1 // indirect
+	github.com/google/btree v1.1.2 // indirect
 	github.com/google/gnostic-models v0.6.8 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/google/go-containerregistry v0.20.3 // indirect
@@ -185,7 +186,7 @@ require (
 	github.com/googleapis/enterprise-certificate-proxy v0.3.4 // indirect
 	github.com/googleapis/gax-go/v2 v2.14.1 // indirect
 	github.com/gookit/color v1.5.4 // indirect
-	github.com/gorilla/mux v1.8.0 // indirect
+	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/gosuri/uitable v0.0.4 // indirect
 	github.com/gregjones/httpcache v0.0.0-20190611155906-901d90724c79 // indirect
@@ -200,6 +201,7 @@ require (
 	github.com/hashicorp/hcl/v2 v2.23.0 // indirect
 	github.com/huandu/xstrings v1.5.0 // indirect
 	github.com/iancoleman/strcase v0.3.0 // indirect
+	github.com/imdario/mergo v0.3.14 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/itchyny/timefmt-go v0.1.6 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
@@ -307,7 +309,6 @@ require (
 	github.com/wagoodman/go-partybus v0.0.0-20230516145632-8ccac152c651 // indirect
 	github.com/wagoodman/go-presenter v0.0.0-20211015174752-f9c01afc824b // indirect
 	github.com/wagoodman/go-progress v0.0.0-20230925121702-07e42b3cdba0 // indirect
-	github.com/x448/float16 v0.8.4 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
 	github.com/xeipuuv/gojsonpointer v0.0.0-20190905194746-02993c407bfb // indirect
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
@@ -338,6 +339,7 @@ require (
 	golang.org/x/time v0.11.0 // indirect
 	golang.org/x/tools v0.31.0 // indirect
 	golang.org/x/xerrors v0.0.0-20231012003039-104605ab7028 // indirect
+	gomodules.xyz/jsonpatch/v2 v2.4.0 // indirect
 	google.golang.org/api v0.215.0 // indirect
 	google.golang.org/genproto v0.0.0-20241118233622-e639e219e697 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20241209162323-e6fa225c2576 // indirect
@@ -347,9 +349,10 @@ require (
 	gopkg.in/evanphx/json-patch.v4 v4.12.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
+	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gorm.io/gorm v1.25.12 // indirect
-	k8s.io/apiserver v0.32.3 // indirect
-	k8s.io/component-base v0.32.3 // indirect
+	k8s.io/apiserver v0.29.14 // indirect
+	k8s.io/component-base v0.29.14 // indirect
 	k8s.io/kube-openapi v0.0.0-20241105132330-32ad38e42d3f // indirect
 	k8s.io/utils v0.0.0-20241104100929-3ea5e8cea738 // indirect
 	modernc.org/libc v1.62.1 // indirect
@@ -357,6 +360,7 @@ require (
 	modernc.org/memory v1.9.1 // indirect
 	modernc.org/sqlite v1.37.0 // indirect
 	oras.land/oras-go v1.2.5 // indirect
+	sigs.k8s.io/controller-runtime v0.17.2 // indirect
 	sigs.k8s.io/json v0.0.0-20241010143419-9aa6b5e7a4b3 // indirect
 	sigs.k8s.io/kustomize/api v0.18.0 // indirect
 	sigs.k8s.io/kustomize/kyaml v0.18.1 // indirect

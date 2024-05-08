@@ -87,6 +87,8 @@ func (p Pod) Header(ns string) model1.Header {
 	return model1.Header{
 		model1.HeaderColumn{Name: "NAMESPACE"},
 		model1.HeaderColumn{Name: "NAME"},
+		model1.HeaderColumn{Name: "ROLE"},
+		model1.HeaderColumn{Name: "CMP/CMPD"},
 		model1.HeaderColumn{Name: "VS", VS: true},
 		model1.HeaderColumn{Name: "PF"},
 		model1.HeaderColumn{Name: "READY"},
@@ -108,8 +110,6 @@ func (p Pod) Header(ns string) model1.Header {
 		model1.HeaderColumn{Name: "LABELS", Wide: true},
 		model1.HeaderColumn{Name: "VALID", Wide: true},
 		model1.HeaderColumn{Name: "AGE", Time: true},
-		model1.HeaderColumn{Name: "ROLE"},
-		model1.HeaderColumn{Name: "CMPD"},
 	}
 }
 
@@ -124,11 +124,18 @@ func (p Pod) Render(o interface{}, ns string, row *model1.Row) error {
 	if err := runtime.DefaultUnstructuredConverter.FromUnstructured(pwm.Raw.Object, &po); err != nil {
 		return err
 	}
+
 	role := ""
 	cmpd := ""
-	if len(po.Labels) > 0 {
+	cmp := ""
+	if len(po.Labels) > 0 && po.Labels["kubeblocks.io/role"] != "" {
 		role = po.Labels["kubeblocks.io/role"]
+	}
+	if len(po.Labels) > 0 && po.Labels["app.kubernetes.io/component"] != "" {
 		cmpd = po.Labels["app.kubernetes.io/component"]
+	}
+	if len(po.Labels) > 0 && po.Labels["apps.kubeblocks.io/component-name"] != "" {
+		cmp = po.Labels["apps.kubeblocks.io/component-name"]
 	}
 
 	ics := po.Status.InitContainerStatuses
@@ -147,6 +154,8 @@ func (p Pod) Render(o interface{}, ns string, row *model1.Row) error {
 	row.Fields = model1.Fields{
 		po.Namespace,
 		po.Name,
+		role,
+		fmt.Sprintf("%s/%s", cmp, cmpd),
 		computeVulScore(po.ObjectMeta, &po.Spec),
 		"●",
 		strconv.Itoa(cr) + "/" + strconv.Itoa(len(po.Spec.Containers)),
@@ -168,8 +177,6 @@ func (p Pod) Render(o interface{}, ns string, row *model1.Row) error {
 		mapToStr(po.Labels),
 		AsStatus(p.diagnose(phase, cr, len(cs))),
 		ToAge(po.GetCreationTimestamp()),
-		role,
-		cmpd,
 	}
 
 	return nil

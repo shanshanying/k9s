@@ -115,10 +115,10 @@ func appsViewers(vv MetaViewers) {
 	vv[client.NewGVR("apps/v1/daemonsets")] = MetaViewer{
 		viewerFn: NewDaemonSet,
 	}
-	vv[client.NewGVR("apps.kubeblocks.io/v1alpha1/components")] = MetaViewer{
+	vv[client.NewGVR("apps.kubeblocks.io/v1/components")] = MetaViewer{
 		viewerFn: NewComponent,
 	}
-	vv[client.NewGVR("apps.kubeblocks.io/v1alpha1/clusters")] = MetaViewer{
+	vv[client.NewGVR("apps.kubeblocks.io/v1/clusters")] = MetaViewer{
 		viewerFn: NewCluster,
 	}
 }

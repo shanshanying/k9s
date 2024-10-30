@@ -4,7 +4,7 @@
 package view
 
 import (
-	appsvalpha1 "github.com/apecloud/kubeblocks/apis/apps/v1alpha1"
+	appsv1 "github.com/apecloud/kubeblocks/apis/apps/v1"
 	"github.com/derailed/k9s/internal/client"
 	"github.com/derailed/k9s/internal/dao"
 	"github.com/derailed/k9s/internal/ui"
@@ -46,13 +46,13 @@ func (s *Cluster) showComponents(app *App, _ ui.Tabular, _ client.GVR, path stri
 	showComponents(app, path, lables)
 }
 
-func (s *Cluster) getInstance(path string) (*appsvalpha1.Cluster, error) {
+func (s *Cluster) getInstance(path string) (*appsv1.Cluster, error) {
 	var sts dao.Cluster
 	return sts.GetInstance(s.App().factory, path)
 }
 
 func showComponents(app *App, path string, labelSel map[string]string) {
-	v := NewComponent(client.NewGVR("apps.kubeblocks.io/v1alpha1/components"))
+	v := NewComponent(client.NewGVR("apps.kubeblocks.io/v1/components"))
 	v.SetContextFn(podCtx(app, path, ""))
 	v.SetLabelFilter(labelSel)
 

@@ -54,6 +54,8 @@ const (
 var defaultPodHeader = model1.Header{
 	model1.HeaderColumn{Name: "NAMESPACE"},
 	model1.HeaderColumn{Name: "NAME"},
+	model1.HeaderColumn{Name: "ROLE"},
+	model1.HeaderColumn{Name: "CMP/CMPD"},
 	model1.HeaderColumn{Name: "VS", Attrs: model1.Attrs{VS: true}},
 	model1.HeaderColumn{Name: "PF"},
 	model1.HeaderColumn{Name: "READY"},
@@ -166,6 +168,22 @@ func (p *Pod) defaultRow(pwm *PodWithMetrics, row *model1.Row) error {
 	cReady += iReady
 	allCounts := len(spec.Containers) + iTerminated
 
+	// add role,cmp/cmpd to pod row
+	role := ""
+	cmpd := ""
+	cmp := ""
+
+	lables := pwm.Raw.GetLabels()
+	if len(lables) > 0 && lables["kubeblocks.io/role"] != "" {
+		role = lables["kubeblocks.io/role"]
+	}
+	if len(lables) > 0 && lables["app.kubernetes.io/component"] != "" {
+		cmpd = lables["app.kubernetes.io/component"]
+	}
+	if len(lables) > 0 && lables["apps.kubeblocks.io/component-name"] != "" {
+		cmp = lables["apps.kubeblocks.io/component-name"]
+	}
+
 	var ccmx []mv1beta1.ContainerMetrics
 	if pwm.MX != nil {
 		ccmx = pwm.MX.Containers
@@ -179,6 +197,8 @@ func (p *Pod) defaultRow(pwm *PodWithMetrics, row *model1.Row) error {
 	row.Fields = model1.Fields{
 		ns,
 		n,
+		role,
+		fmt.Sprintf("%s/%s", cmp, cmpd),
 		computeVulScore(ns, pwm.Raw.GetLabels(), spec),
 		"●",
 		strconv.Itoa(cReady) + "/" + strconv.Itoa(allCounts),

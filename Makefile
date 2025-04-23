@@ -1,4 +1,8 @@
 NAME       := k9s
+GO ?= go
+GOFMT ?= gofmt
+GOOS ?= $(shell $(GO) env GOOS)
+GOARCH ?= $(shell $(GO) env GOARCH)
 GO_FLAGS   ?=
 GO_TAGS	   ?= netgo
 CGO_ENABLED?=0
@@ -25,7 +29,7 @@ cover:  ## Run test coverage suite
 	@go tool cover --html=cov.out
 
 build:  ## Builds the CLI
-	@CGO_ENABLED=${CGO_ENABLED} go build ${GO_FLAGS} \
+	@CGO_ENABLED=${CGO_ENABLED} GOOS=$(word 2,$(subst ., ,$@)) GOARCH=$(word 3,$(subst ., ,$@)) $(GO) build ${GO_FLAGS} \
 	-ldflags "-w -s -X ${PACKAGE}/cmd.version=${VERSION} -X ${PACKAGE}/cmd.commit=${GIT_REV} -X ${PACKAGE}/cmd.date=${DATE}" \
 	-a -tags=${GO_TAGS} -o ${OUTPUT_BIN} main.go
 

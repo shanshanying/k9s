@@ -159,17 +159,20 @@ func (p *Pod) defaultRow(pwm *PodWithMetrics, row *model1.Row) error {
 	_, _, irc, _ := p.Statuses(st.InitContainerStatuses)
 	cr, _, rc, lr := p.Statuses(st.ContainerStatuses)
 
+	// add role,cmp/cmpd to pod row
 	role := ""
 	cmpd := ""
 	cmp := ""
-	if len(po.Labels) > 0 && po.Labels["kubeblocks.io/role"] != "" {
-		role = po.Labels["kubeblocks.io/role"]
+
+	lables := pwm.Raw.GetLabels()
+	if len(lables) > 0 && lables["kubeblocks.io/role"] != "" {
+		role = lables["kubeblocks.io/role"]
 	}
-	if len(po.Labels) > 0 && po.Labels["app.kubernetes.io/component"] != "" {
-		cmpd = po.Labels["app.kubernetes.io/component"]
+	if len(lables) > 0 && lables["app.kubernetes.io/component"] != "" {
+		cmpd = lables["app.kubernetes.io/component"]
 	}
-	if len(po.Labels) > 0 && po.Labels["apps.kubeblocks.io/component-name"] != "" {
-		cmp = po.Labels["apps.kubeblocks.io/component-name"]
+	if len(lables) > 0 && lables["apps.kubeblocks.io/component-name"] != "" {
+		cmp = lables["apps.kubeblocks.io/component-name"]
 	}
 
 	var ccmx []mv1beta1.ContainerMetrics

@@ -9,6 +9,7 @@ import (
 	"github.com/derailed/k9s/internal/dao"
 	"github.com/derailed/k9s/internal/ui"
 	"github.com/rs/zerolog/log"
+	"k8s.io/apimachinery/pkg/labels"
 )
 
 // Cluster represents a statefulset viewer.
@@ -17,7 +18,7 @@ type Cluster struct {
 }
 
 // NewStatefulSet returns a new viewer.
-func NewCluster(gvr client.GVR) ResourceViewer {
+func NewCluster(gvr *client.GVR) ResourceViewer {
 	var s Cluster
 	s.ResourceViewer = NewPortForwardExtender(
 		NewLogsExtender(NewBrowser(gvr), nil),
@@ -25,7 +26,6 @@ func NewCluster(gvr client.GVR) ResourceViewer {
 
 	s.AddBindKeysFn(s.bindKeys)
 	s.GetTable().SetEnterFn(s.showComponents)
-
 	return &s
 }
 
@@ -33,17 +33,16 @@ func (s *Cluster) bindKeys(aa *ui.KeyActions) {
 	aa.Add(ui.KeyShiftR, ui.NewKeyAction("Sort Ready", s.GetTable().SortColCmd(readyCol, true), false))
 }
 
-func (s *Cluster) showComponents(app *App, _ ui.Tabular, _ client.GVR, path string) {
-	i, err := s.getInstance(path)
+func (s *Cluster) showComponents(app *App, _ ui.Tabular, _ *client.GVR, fqn string) {
+	i, err := s.getInstance(fqn)
 	if err != nil {
 		app.Flash().Err(err)
 		return
 	}
-
-	lables := map[string]string{
+	labelsSelector := labels.SelectorFromSet(map[string]string{
 		"app.kubernetes.io/instance": i.GetName(),
-	}
-	showComponents(app, path, lables)
+	})
+	showComponents(app, fqn, labelsSelector)
 }
 
 func (s *Cluster) getInstance(path string) (*appsv1.Cluster, error) {
@@ -51,10 +50,10 @@ func (s *Cluster) getInstance(path string) (*appsv1.Cluster, error) {
 	return sts.GetInstance(s.App().factory, path)
 }
 
-func showComponents(app *App, path string, labelSel map[string]string) {
-	v := NewComponent(client.NewGVR("apps.kubeblocks.io/v1/components"))
+func showComponents(app *App, path string, labelSel labels.Selector) {
+	v := NewComponent(client.KBCMP)
 	v.SetContextFn(podCtx(app, path, ""))
-	v.SetLabelFilter(labelSel)
+	v.SetLabelSelector(labelSel)
 
 	ns, _ := client.Namespaced(path)
 	if err := app.Config.SetActiveNamespace(ns); err != nil {

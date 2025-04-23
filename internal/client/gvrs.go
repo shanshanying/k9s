@@ -72,4 +72,7 @@ var (
 	CrbGVR  = NewGVR("rbac.authorization.k8s.io/v1/clusterrolebindings")
 	RoGVR   = NewGVR("rbac.authorization.k8s.io/v1/roles")
 	RobGVR  = NewGVR("rbac.authorization.k8s.io/v1/rolebindings")
+
+	KBCluster = NewGVR("apps.kubeblocks.io/v1/clusters")
+	KBCMP     = NewGVR("apps.kubeblocks.io/v1/components")
 )

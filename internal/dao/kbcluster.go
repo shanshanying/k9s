@@ -7,6 +7,7 @@ import (
 	"errors"
 
 	appsv1 "github.com/apecloud/kubeblocks/apis/apps/v1"
+	"github.com/derailed/k9s/internal/client"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -24,7 +25,7 @@ type Component struct {
 
 // GetInstance returns a statefulset instance.
 func (*Component) GetInstance(f Factory, fqn string) (*appsv1.Component, error) {
-	o, err := f.Get("apps.kubeblocks.io/v1/components", fqn, true, labels.Everything())
+	o, err := f.Get(client.KBCMP, fqn, true, labels.Everything())
 	if err != nil {
 		return nil, err
 	}
